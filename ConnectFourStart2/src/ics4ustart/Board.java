@@ -4,18 +4,20 @@ import java.util.Random;
 
 /**
  * Represents a 2 dimensional Board for Grid based games.
+ * 
  * @author Hutchison
  * @version 1.0
  *
  */
 public class Board {
-	//lll
+	// lll
 	private Cell[][] board;
 	private int rows;
 	private int cols;
 
 	/**
 	 * Constructor for Boards.
+	 * 
 	 * @param aRows number of rows in board
 	 * @param aCols number of columns in board
 	 */
@@ -29,67 +31,94 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * Obtain the current number of rows.
+	 * 
 	 * @return number of rows
 	 */
-	public int getRows(){
+	public int getRows() {
 		return rows;
 	}
-	
+
 	/**
 	 * Obtain the current number of columns.
+	 * 
 	 * @return number of columns
 	 */
-	public int getCols(){
+	public int getCols() {
 		return cols;
 	}
-	public  CellState checkAcross() {
+
+	public CellState checkAcross() {
 		int countP1 = 0;
 		int countP2 = 0;
-	
+
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
 				if (board[r][c].getState() == CellState.P1) {
-					countP1 =countP1 + 1;
-				}
-				else {
+					countP1 = countP1 + 1;
+				} else {
 					countP1 = 0;
 				}
-				if (board[r][c].getState() == CellState.P1) {
-					countP2 =countP2 + 1;
-				}
-				else {
+				if (board[r][c].getState() == CellState.P2) {
+					countP2 = countP2 + 1;
+				} else {
 					countP2 = 0;
 				}
 				if (countP1 == 4) {
 					return CellState.P1;
 				}
-				else if (countP2 == 4) {
+				if (countP2 == 4) {
 					return CellState.P2;
 				}
 			}
 		}
 		return CellState.EMPTY;
 	}
-	
+
+	public CellState checkVertical() {
+		int countP1 = 0;
+		int countP2 = 0;
+
+		for (int c = 0; c < cols; c++) {
+			for (int r = 0; r < rows; r++) {
+				if (board[r][c].getState() == CellState.P1) {
+					countP1 = countP1 + 1;
+				} else {
+					countP1 = 0;
+				}
+				if (board[r][c].getState() == CellState.P2) {
+					countP2 = countP2 + 1;
+				} else {
+					countP2 = 0;
+				}
+				if (countP1 == 4) {
+					return CellState.P1;
+				}
+				if (countP2 == 4) {
+					return CellState.P2;
+				}
+			}
+		}
+		return CellState.EMPTY;
+	}
+
 	/**
 	 * Check if a proposed location is valid.
+	 * 
 	 * @param rowIndex row index to check
 	 * @param colIndex column index to check
 	 * @return true if index value is valid, otherwise false
 	 */
-	public boolean isValid(int rowIndex, int colIndex){
-		return (rowIndex>=0 && rowIndex < rows) && (colIndex>=0 && colIndex < cols);
+	public boolean isValid(int rowIndex, int colIndex) {
+		if (board[rowIndex][colIndex].getState() == CellState.EMPTY) {
+			return true;
+		}
+
+		return false;
 	}
-	
-	
-	
-	
-		
-	
-	
+
 	public void display() {
 		System.out.println("BOARD");
 		for (int i = 0; i < rows; i++) {
@@ -101,7 +130,12 @@ public class Board {
 	}
 
 	public void placePiece(int column, CellState player) {
-		board[rows-1][column-1].setState(player);
-		
+		for (int i = 6; i > -1; i--) {
+			if (isValid(i, column - 1)) {
+				board[i][column - 1].setState(player);
+				break;
+			}
+		}
+
 	}
 }
