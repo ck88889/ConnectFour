@@ -26,17 +26,28 @@ public class Driver {
 		boolean done = false;
 		String value = "";
 		int column = 0;
-		CellState player = CellState.P1;
+		int turn = 0;
 			
 		while (!done) {
+			turn = turn + 1;
 			column = getColumn(in, 1, COLS); // include min and max
-			board.placePiece(column, player);
+			if (turn%2 == 0) {
+				board.placePiece(column, CellState.P2);
+			}
+			else {
+				board.placePiece(column, CellState.P1);
+			}
 			
 			// Check for winners
-			
+
 			board.display();
-			if (player == CellState.P1) {
-				player = CellState.P2;
+			if (board.checkAcross() == CellState.P1) {
+				done = true;
+				System.out.println("Player one won!");
+			}
+			else if (board.checkAcross() == CellState.P1) {
+				done = true;
+				System.out.println("Player two won!");
 			}
 		}
 	}
