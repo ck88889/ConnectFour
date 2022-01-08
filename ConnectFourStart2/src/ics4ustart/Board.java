@@ -45,6 +45,34 @@ public class Board {
 	public int getCols(){
 		return cols;
 	}
+	public  CellState checkAcross() {
+		int countP1 = 0;
+		int countP2 = 0;
+	
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				if (board[r][c].getState() == CellState.P1) {
+					countP1 =countP1 + 1;
+				}
+				else {
+					countP1 = 0;
+				}
+				if (board[r][c].getState() == CellState.P1) {
+					countP2 =countP2 + 1;
+				}
+				else {
+					countP2 = 0;
+				}
+				if (countP1 == 4) {
+					return CellState.P1;
+				}
+				else if (countP2 == 4) {
+					return CellState.P2;
+				}
+			}
+		}
+		return CellState.EMPTY;
+	}
 	
 	/**
 	 * Check if a proposed location is valid.
