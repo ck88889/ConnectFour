@@ -103,6 +103,21 @@ public class Board {
 		}
 		return CellState.EMPTY;
 	}
+	public CellState checkDiagonalOne() {
+		CellState player1 = CellState.P1;
+		CellState player2 = CellState.P2;
+		for (int r = 0; r < rows-3; r++) {
+			for (int c = 0; c < cols -3; c ++) {
+				if (board[r][c].getState() == player1 && board[r + 1][c+ 1].getState() == player1 && board[r+2][c+2].getState() == player1 && board[r+3][c+3].getState() == player1) {
+					return CellState.P1;
+				}
+				else if(board[r][c].getState() == player2 && board[r + 1][c+ 1].getState() == player2 && board[r+2][c+2].getState() == player2 && board[r+3][c+3].getState() == player2 && board[r+4][c+4].getState() == player2) {
+					return CellState.P2;
+				}
+			}
+		}
+		return CellState.EMPTY;
+	}
 
 	/**
 	 * Check if a proposed location is valid.
