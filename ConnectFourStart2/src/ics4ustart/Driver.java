@@ -41,10 +41,10 @@ public class Driver {
 			// Check for winners
 
 			board.display();
-			if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1) {
+			if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1|| board.checkDiagonalOne() == CellState.P1) {
 				done = true;
 				System.out.println("Player one won!");
-			} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2) {
+			} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2|| board.checkDiagonalOne() == CellState.P2) {
 				done = true;
 				System.out.println("Player two won!");
 			}
