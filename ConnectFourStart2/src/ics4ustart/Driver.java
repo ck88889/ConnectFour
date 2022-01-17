@@ -31,7 +31,7 @@ public class Driver {
 		while (!done) {
 			turn = turn + 1;
 			column = getColumn(in, 1, COLS); // include min and max
-			if (turn%2 == 0) {
+			if (checkTurn(turn) == 2) {
 				board.placePiece(column, CellState.P2);
 			}
 			else {
@@ -61,7 +61,7 @@ public class Driver {
 		int column = 0;
 		
 		while (!valid) {
-			String prompt = String.format("Which column (%d,%d) :",min,max); 
+			String prompt = String.format("Player " + checkTurn(turn)+ ": Which column (%d,%d) :",min,max); 
 			System.out.print(prompt);
 			if (in.hasNextInt()) {
 				column = in.nextInt();
@@ -76,5 +76,13 @@ public class Driver {
 			in.nextLine();
 		}
 		return column;
+	}
+	public static int checkTurn(int turn) {
+		if (turn%2 == 0) {
+			return 2;
+		}
+		else {
+			return 1;
+		}
 	}
 }
