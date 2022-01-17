@@ -23,6 +23,9 @@ public class Driver {
 		
 		// console input
 		Scanner in = new Scanner(System.in);
+		System.out.println("Enter '1' for Single Player mode or '2' for Two Player mode: ");
+		int mode = in.nextInt();
+		
 		boolean done = false;
 		String value = "";
 		int column = 0;
@@ -30,11 +33,12 @@ public class Driver {
 			
 		while (!done) {
 			turn = turn + 1;
-			column = getColumn(in, 1, COLS); // include min and max
 			if (checkTurn(turn) == 2) {
+				column = getColumn(in, 1, COLS, turn, mode); 
 				board.placePiece(column, CellState.P2);
 			}
 			else {
+				column = getColumn(in, 1, COLS, turn, mode); 
 				board.placePiece(column, CellState.P1);
 			}
 			
@@ -56,10 +60,11 @@ public class Driver {
  * @param in
  * @return valid column number
  */
-	private static int getColumn(Scanner in, int min, int max) {
+	private static int getColumn(Scanner in, int min, int max, int turn, int mode) {
 		boolean valid = false;
 		int column = 0;
 		
+		if (mode == 2 || checkTurn(turn) ==1 ) {
 		while (!valid) {
 			String prompt = String.format("Player " + checkTurn(turn)+ ": Which column (%d,%d) :",min,max); 
 			System.out.print(prompt);
@@ -74,6 +79,10 @@ public class Driver {
 				System.out.println("Not a number.");
 			}
 			in.nextLine();
+		}
+		}
+		else if(mode == 1) {
+			column = (int)(Math.random()* (max - min + 1)+ min);
 		}
 		return column;
 	}
