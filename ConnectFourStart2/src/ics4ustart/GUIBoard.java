@@ -130,11 +130,11 @@ public class GUIBoard extends Application {
 
 					// check if any player has won
 					if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1
-							|| board.checkDiagonalOne() == CellState.P1) {
+							|| board.checkDiagonalOne() == CellState.P1 || board.checkDiagonalTwo() == CellState.P1) {
 						msg = "Player one won!";
 						done = true;
 					} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2
-							|| board.checkDiagonalOne() == CellState.P2) {
+							|| board.checkDiagonalOne() == CellState.P2 || board.checkDiagonalTwo() == CellState.P2) {
 						msg = "Player two won!";
 						done = true;
 					}
