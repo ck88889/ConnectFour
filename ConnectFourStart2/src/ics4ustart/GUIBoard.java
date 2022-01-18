@@ -1,4 +1,7 @@
+package ics4ustart;
+
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -24,33 +27,81 @@ public class GUIBoard extends Application {
 
 	// set up constants for the game window
 	final static int WIDTH = 530;
-	final static int HEIGHT = 610;
+	final static int HEIGHT = 640;
 
 	// Setup constants for the Board
 	final int ROWS = 7;
 	final int COLS = 7;
 
-	boolean done = false;
+	boolean done = true;
+	boolean singlePlayer = false;
 	int turn = 0;
-	String msg = "It is player one's turn.";
+	String msg;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		Font font = new Font("Arial", 30);
+		Font font = new Font("Arial", 25);
+		Font popupFont = new Font("Arial", 18);
 
 		Group root = new Group();
+		Label result = new Label();
 
 		// create the background of the game board
 		Rectangle rect = new Rectangle(0, 0, 530, 540);
 		rect.setFill(Color.SLATEGREY);
 		root.getChildren().add(rect);
 
-		// generates the inital game board
+		// generates the initial game board
 		Board board = new Board(ROWS, COLS);
 		getBoard(board, root);
 
-		Label result = new Label();
+		// creates pop up so user can choose player mode
+		Rectangle popup = new Rectangle((WIDTH / 2) - (300 / 2), (HEIGHT / 2) - (200 / 2), 300, 200);
+		popup.setFill(Color.LIGHTBLUE);
+		popup.setStroke(Color.BLACK);
+		root.getChildren().add(popup);
 
+		Button SinglePlayerbtn = new Button("Single Player");
+		Button TwoPlayerbtn = new Button("Two Player");
+		SinglePlayerbtn.setFont(popupFont);
+		TwoPlayerbtn.setFont(popupFont);
+
+		TwoPlayerbtn.relocate((WIDTH / 2) - (300 / 2) + 90, (HEIGHT / 2) - (200 / 2) + 70);
+		SinglePlayerbtn.relocate((WIDTH / 2) - (300 / 2) + 82, (HEIGHT / 2) - (200 / 2) + 120);
+		root.getChildren().add(TwoPlayerbtn);
+		root.getChildren().add(SinglePlayerbtn);
+
+		Label popupTitle = new Label("Choose player mode:");
+		popupTitle.setFont(popupFont);
+		popupTitle.relocate((WIDTH / 2) - (300 / 2) + 60, (HEIGHT / 2) - (200 / 2) + 30);
+		root.getChildren().add(popupTitle);
+
+		// checks for the player mode the user chooses
+		SinglePlayerbtn.setOnAction((event) -> {
+			singlePlayer = true;
+			done = false;
+
+			msg = "You are player one (red).";
+			result.setText(msg);
+			root.getChildren().remove(popup);
+			root.getChildren().remove(popupTitle);
+			root.getChildren().remove(TwoPlayerbtn);
+			root.getChildren().remove(SinglePlayerbtn);
+		});
+
+		TwoPlayerbtn.setOnAction((event) -> {
+			singlePlayer = false;
+			done = false;
+
+			msg = "It is player one's turn (red).";
+			result.setText(msg);
+			root.getChildren().remove(popup);
+			root.getChildren().remove(popupTitle);
+			root.getChildren().remove(TwoPlayerbtn);
+			root.getChildren().remove(SinglePlayerbtn);
+		});
+
+		// Lets user place game pieces and checks for winner
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -58,24 +109,33 @@ public class GUIBoard extends Application {
 				if (done == false) {
 					int column = findColumn(event.getSceneX());
 
-					// checks whose turn it is
-					if (turn % 2 == 0) {
-						board.placePiece(column, CellState.P2);
-						msg = "It is player two's turn.";
+					if (singlePlayer == false) {
+						// checks whose turn it is
+						if (turn % 2 == 0) {
+							board.placePiece(column, CellState.P1);
+							msg = "It is player two's turn (yellow).";
+						} else {
+							board.placePiece(column, CellState.P2);
+							msg = "It is player one's turn (red).";
+						}
 					} else {
 						board.placePiece(column, CellState.P1);
-						msg = "It is player one's turn.";
+
+						int genCol = (int) (Math.random() * (COLS - 1 + 1) + 1);
+						board.placePiece(genCol, CellState.P2);
 					}
 
 					// generates game board
 					getBoard(board, root);
 
 					// check if any player has won
-					if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1) {
-						msg = "Player two won!";
-						done = true;
-					} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2) {
+					if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1
+							|| board.checkDiagonalOne() == CellState.P1) {
 						msg = "Player one won!";
+						done = true;
+					} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2
+							|| board.checkDiagonalOne() == CellState.P2) {
+						msg = "Player two won!";
 						done = true;
 					}
 
@@ -86,9 +146,9 @@ public class GUIBoard extends Application {
 		});
 
 		// shows a message to the player
-		result.setText(msg);
 		result.setFont(font);
-		result.relocate(25, 555);
+		result.relocate(20, 555);
+		result.setAlignment(Pos.CENTER);
 		root.getChildren().add(result);
 
 		Scene scene = new Scene(root, WIDTH, HEIGHT, Color.WHITE);
@@ -135,9 +195,9 @@ public class GUIBoard extends Application {
 				if (board.getPiece(r, c).getState() == CellState.EMPTY) {
 					circ.setFill(Color.WHITE);
 				} else if (board.getPiece(r, c).getState() == CellState.P1) {
-					circ.setFill(Color.YELLOW);
-				} else if (board.getPiece(r, c).getState() == CellState.P2) {
 					circ.setFill(Color.RED);
+				} else if (board.getPiece(r, c).getState() == CellState.P2) {
+					circ.setFill(Color.YELLOW);
 				}
 
 				circ.setStroke(Color.BLACK);
