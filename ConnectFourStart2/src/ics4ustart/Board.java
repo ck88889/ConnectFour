@@ -137,7 +137,7 @@ public class Board {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
 		for (int r = 0; r < rows-3; r++) {
-			for (int c = cols-1; c >= 0; c --) {
+			for (int c = cols-1; c >= 3; c --) {
 				if (board[r][c].getState() == player1 && board[r + 1][c- 1].getState() == player1 && board[r+2][c-2].getState() == player1 && board[r+3][c-3].getState() == player1) {
 					return CellState.P1;
 				}
