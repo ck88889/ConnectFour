@@ -120,9 +120,20 @@ public class GUIBoard extends Application {
 						}
 					} else {
 						board.placePiece(column, CellState.P1);
-
-						int genCol = (int) (Math.random() * (COLS - 1 + 1) + 1);
-						board.placePiece(genCol, CellState.P2);
+						
+						// check if any player has won
+						if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1
+								|| board.checkDiagonalOne() == CellState.P1 || board.checkDiagonalTwo() == CellState.P1) {
+							msg = "Player one won!";
+							done = true;
+						} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2
+								|| board.checkDiagonalOne() == CellState.P2 || board.checkDiagonalTwo() == CellState.P2) {
+							msg = "Player two won!";
+							done = true;
+						}else {
+							int genCol = (int) (Math.random() * (COLS - 1 + 1) + 1);
+							board.placePiece(genCol, CellState.P2);
+						}
 					}
 
 					// generates game board
