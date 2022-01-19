@@ -10,7 +10,6 @@ import java.util.Random;
  *
  */
 public class Board {
-	// lll
 	private Cell[][] board;
 	private int rows;
 	private int cols;
@@ -61,7 +60,11 @@ public class Board {
 		return board[x][y];
 	}
 
-	public CellState checkAcross() {
+	/**
+	 * Checks if four in a row has been reached horizonatally
+	 * @ return the 
+	 *
+	public int checkAcross() {
 		int countP1 = 0;
 		int countP2 = 0;
 
@@ -78,17 +81,17 @@ public class Board {
 					countP2 = 0;
 				}
 				if (countP1 == 4) {
-					return CellState.P1;
+					return 1;
 				}
 				if (countP2 == 4) {
-					return CellState.P2;
+					return 2;
 				}
 			}
 		}
-		return CellState.EMPTY;
+		return 0;
 	}
 
-	public CellState checkVertical() {
+	public int checkVertical() {
 		int countP1 = 0;
 		int countP2 = 0;
 
@@ -105,48 +108,48 @@ public class Board {
 					countP2 = 0;
 				}
 				if (countP1 == 4) {
-					return CellState.P1;
+					return 1;
 				}
 				if (countP2 == 4) {
-					return CellState.P2;
+					return 2;
 				}
 			}
 		}
-		return CellState.EMPTY;
+		return 0;
 	}
 
-	public CellState checkDiagonalOne() {
+	public int checkDiagonalOne() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
 		for (int r = 0; r < rows - 3; r++) {
 			for (int c = 0; c < cols - 3; c++) {
 				if (board[r][c].getState() == player1 && board[r + 1][c + 1].getState() == player1
 						&& board[r + 2][c + 2].getState() == player1 && board[r + 3][c + 3].getState() == player1) {
-					return CellState.P1;
+					return 1;
 				} else if (board[r][c].getState() == player2 && board[r + 1][c + 1].getState() == player2
 						&& board[r + 2][c + 2].getState() == player2 && board[r + 3][c + 3].getState() == player2
 						) {
-					return CellState.P2;
+					return 2;
 				}
 			}
 		}
-		return CellState.EMPTY;
+		return 0;
 	}
 	
-	public CellState checkDiagonalTwo() {
+	public int checkDiagonalTwo() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
 		for (int r = 0; r < rows-3; r++) {
 			for (int c = cols-1; c >= 3; c --) {
 				if (board[r][c].getState() == player1 && board[r + 1][c- 1].getState() == player1 && board[r+2][c-2].getState() == player1 && board[r+3][c-3].getState() == player1) {
-					return CellState.P1;
+					return 1;
 				}
 				else if(board[r][c].getState() == player2 && board[r + 1][c- 1].getState() == player2 && board[r+2][c-2].getState() == player2 && board[r+3][c-3].getState() == player2) {
-					return CellState.P2;
+					return 2;
 				}
 			}
 		}
-		return CellState.EMPTY;
+		return 0;
 	}
 
 	/**
