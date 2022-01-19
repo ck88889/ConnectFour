@@ -125,7 +125,7 @@ public class Board {
 					return CellState.P1;
 				} else if (board[r][c].getState() == player2 && board[r + 1][c + 1].getState() == player2
 						&& board[r + 2][c + 2].getState() == player2 && board[r + 3][c + 3].getState() == player2
-						&& board[r + 4][c + 4].getState() == player2) {
+						) {
 					return CellState.P2;
 				}
 			}
