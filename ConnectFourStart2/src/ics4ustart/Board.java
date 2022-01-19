@@ -61,8 +61,8 @@ public class Board {
 	}
 
 	/**
-	 * Checks if four in a row has been reached horizonatally
-	 * @ return the 
+	 * Checks if four in a row has been reached horizontally
+	 * @ return the number of the player who won, 0 if no one won horizontally
 	 *
 	public int checkAcross() {
 		int countP1 = 0;
@@ -90,7 +90,10 @@ public class Board {
 		}
 		return 0;
 	}
-
+	/**
+	 * Checks if four in a row has been reached vertically
+	 * @ return the number of the player who won, 0 if no one won horizontally
+	 *
 	public int checkVertical() {
 		int countP1 = 0;
 		int countP2 = 0;
@@ -117,7 +120,10 @@ public class Board {
 		}
 		return 0;
 	}
-
+	/**
+	 * Checks if four in a row has been reached diagonally from top left to bottom right
+	 * @ return the number of the player who won, 0 if no one won diagonally
+	 *
 	public int checkDiagonalOne() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
@@ -136,6 +142,10 @@ public class Board {
 		return 0;
 	}
 	
+	/**
+	 * Checks if four in a row has been reached diagonally from top right to bottom left
+	 * @ return the number of the player who won, 0 if no one won diagonally
+	 *
 	public int checkDiagonalTwo() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
@@ -166,7 +176,10 @@ public class Board {
 
 		return false;
 	}
-
+	
+	/**
+	 * displays board in the console
+	 *
 	public void display() {
 		System.out.println("BOARD");
 		for (int i = 0; i < rows; i++) {
@@ -177,6 +190,10 @@ public class Board {
 		}
 	}
 
+	/**
+	 * @param column - the column that the user inputted 
+	 * @param player - player 1 or player 2
+	 *
 	public void placePiece(int column, CellState player) {
 		for (int i = 6; i > -1; i--) {
 			if (isValid(i, column - 1)) {
