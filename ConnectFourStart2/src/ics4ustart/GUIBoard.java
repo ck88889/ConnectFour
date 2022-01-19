@@ -122,12 +122,12 @@ public class GUIBoard extends Application {
 						board.placePiece(column, CellState.P1);
 						
 						// check if any player has won
-						if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1
-								|| board.checkDiagonalOne() == CellState.P1 || board.checkDiagonalTwo() == CellState.P1) {
+						if (board.checkAcross() == 1 || board.checkVertical() == 1
+								|| board.checkDiagonalOne() == 1 || board.checkDiagonalTwo() == 1) {
 							msg = "Player one won!";
 							done = true;
-						} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2
-								|| board.checkDiagonalOne() == CellState.P2 || board.checkDiagonalTwo() == CellState.P2) {
+						} else if (board.checkAcross() == 2 || board.checkVertical() == 2
+								|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
 							msg = "Player two won!";
 							done = true;
 						}else {
@@ -140,12 +140,12 @@ public class GUIBoard extends Application {
 					getBoard(board, root);
 
 					// check if any player has won
-					if (board.checkAcross() == CellState.P1 || board.checkVertical() == CellState.P1
-							|| board.checkDiagonalOne() == CellState.P1 || board.checkDiagonalTwo() == CellState.P1) {
+					if (board.checkAcross() == 1 || board.checkVertical() == 1
+							|| board.checkDiagonalOne() == 1 || board.checkDiagonalTwo() == 1) {
 						msg = "Player one won!";
 						done = true;
-					} else if (board.checkAcross() == CellState.P2 || board.checkVertical() == CellState.P2
-							|| board.checkDiagonalOne() == CellState.P2 || board.checkDiagonalTwo() == CellState.P2) {
+					} else if (board.checkAcross() == 2 || board.checkVertical() == 2
+							|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
 						msg = "Player two won!";
 						done = true;
 					}
