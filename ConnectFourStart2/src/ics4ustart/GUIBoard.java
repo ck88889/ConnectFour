@@ -228,8 +228,6 @@ public class GUIBoard extends Application {
 				count = count + 1;
 			}
 		}
-		
-		System.out.println(count);
 
 		if (count > 7) {
 			return 0;
