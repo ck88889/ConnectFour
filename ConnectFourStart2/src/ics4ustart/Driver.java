@@ -45,12 +45,12 @@ public class Driver {
 			// Check for winners
 
 			board.display();
-			if (board.checkAcross() == 1 || board.checkVertical() == 1
-					|| board.checkDiagonalOne() == 1 || board.checkDiagonalTwo() == 1) {
+			if (board.checkAcross() == 1 || board.checkVertical() == 1 || board.checkDiagonalOne() == 1
+					|| board.checkDiagonalTwo() == 1) {
 				done = true;
 				System.out.println("Player one won!");
-			} else if (board.checkAcross() == 2 || board.checkVertical() == 2
-					|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
+			} else if (board.checkAcross() == 2 || board.checkVertical() == 2 || board.checkDiagonalOne() == 2
+					|| board.checkDiagonalTwo() == 2) {
 				done = true;
 				System.out.println("Player two won!");
 			}
@@ -88,10 +88,12 @@ public class Driver {
 		}
 		return column;
 	}
+
 	/**
-	 * checks 
+	 * checks
+	 * 
 	 * @param turn number
-	 * @return player's turn 
+	 * @return player's turn
 	 */
 	public static int checkTurn(int turn) {
 		if (turn % 2 == 0) {
