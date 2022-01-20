@@ -128,13 +128,13 @@ public class GUIBoard extends Application {
 			public void handle(MouseEvent event) {
 
 				if (done == false) {
-					int column = findColumn(event.getSceneX());
+					int column = findColumn(event.getSceneX(), board);
 
 					if (singlePlayer == false) {
 						// checks whose turn it is
 						if (turn % 2 == 0) {
 							if (column == 0) {
-								msg = "You cannot place a piece out of bounds.";
+								msg = "Column is full.";
 							} else {
 								board.placePiece(column, CellState.P1);
 								msg = "It is player two's turn (yellow).";
@@ -201,22 +201,41 @@ public class GUIBoard extends Application {
 		launch(args);
 	}
 
+	public void test(Button replayBtn) {
+
+	}
+
 	/**
 	 * Finds which column the user has clicked in
 	 * 
 	 * @param coorX
 	 * @return
 	 */
-	public int findColumn(double coorX) {
+	public int findColumn(double coorX, Board board) {
+		int foundCol = 0;
+		int count = 1;
+
 		for (int i = 1; i < 8; i++) {
 			int x1 = 5 + ((i - 1) * 75);
 			int x2 = 75 + ((i - 1) * 75);
 			if (x1 < coorX && x2 > coorX) {
-				return i;
+				foundCol = i;
 			}
 		}
 
-		return 0;
+		for (int i = 0; i < 7; i++) {
+			if (board.getPiece(i, (foundCol -1)).getState() == CellState.P1 || board.getPiece(i, (foundCol -1)).getState() == CellState.P2) {
+				count = count + 1;
+			}
+		}
+		
+		System.out.println(count);
+
+		if (count > 7) {
+			return 0;
+		} else {
+			return foundCol;
+		}
 	}
 
 	/**
