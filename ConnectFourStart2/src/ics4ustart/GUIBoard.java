@@ -54,12 +54,12 @@ public class GUIBoard extends Application {
 		// generates the initial game board
 		Board board = new Board(ROWS, COLS);
 		getBoard(board, root);
-		
+
 		Button replayBtn = new Button("Play Again");
 		replayBtn.setFont(popupFont);
 		replayBtn.relocate(530 - 120, 540 + 10);
 		root.getChildren().add(replayBtn);
-		
+
 		getBoard(board, root);
 
 		// creates pop up so user can choose player mode
@@ -107,12 +107,11 @@ public class GUIBoard extends Application {
 			root.getChildren().remove(TwoPlayerbtn);
 			root.getChildren().remove(SinglePlayerbtn);
 		});
-		
-		
+
 		replayBtn.setOnAction((event) -> {
 			board.reset();
 			getBoard(board, root);
-			
+
 			done = true;
 			singlePlayer = false;
 			turn = 0;
@@ -120,7 +119,7 @@ public class GUIBoard extends Application {
 			root.getChildren().add(popupTitle);
 			root.getChildren().add(TwoPlayerbtn);
 			root.getChildren().add(SinglePlayerbtn);
-			
+
 		});
 
 		// Lets user place game pieces and checks for winner
@@ -152,14 +151,12 @@ public class GUIBoard extends Application {
 						board.placePiece(column, CellState.P1);
 
 						// check if any player has won
-						if (board.checkAcross() == 1 || board.checkVertical() == 1
-								|| board.checkDiagonalOne() == 1
+						if (board.checkAcross() == 1 || board.checkVertical() == 1 || board.checkDiagonalOne() == 1
 								|| board.checkDiagonalTwo() == 1) {
 							msg = "Player one won!";
 							done = true;
 						} else if (board.checkAcross() == 2 || board.checkVertical() == 2
-								|| board.checkDiagonalOne() == 2
-								|| board.checkDiagonalTwo() == 2) {
+								|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
 							msg = "Player two won!";
 							done = true;
 						} else {
@@ -172,12 +169,12 @@ public class GUIBoard extends Application {
 					getBoard(board, root);
 
 					// check if any player has won
-					if (board.checkAcross() == 1 || board.checkVertical() == 1
-							|| board.checkDiagonalOne() == 1 || board.checkDiagonalTwo() == 1) {
+					if (board.checkAcross() == 1 || board.checkVertical() == 1 || board.checkDiagonalOne() == 1
+							|| board.checkDiagonalTwo() == 1) {
 						msg = "Player one won!";
 						done = true;
-					} else if (board.checkAcross() == 2 || board.checkVertical() == 2
-							|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
+					} else if (board.checkAcross() == 2 || board.checkVertical() == 2 || board.checkDiagonalOne() == 2
+							|| board.checkDiagonalTwo() == 2) {
 						msg = "Player two won!";
 						done = true;
 					}
@@ -186,7 +183,6 @@ public class GUIBoard extends Application {
 				}
 			}
 		});
-		
 
 		// shows a message to the player
 		result.setFont(font);
@@ -203,10 +199,6 @@ public class GUIBoard extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
-	}
-	
-	public void test(Button replayBtn) {
-		
 	}
 
 	/**
