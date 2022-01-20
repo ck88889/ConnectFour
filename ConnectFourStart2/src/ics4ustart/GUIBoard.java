@@ -54,6 +54,13 @@ public class GUIBoard extends Application {
 		// generates the initial game board
 		Board board = new Board(ROWS, COLS);
 		getBoard(board, root);
+		
+		Button replayBtn = new Button("Play Again");
+		replayBtn.setFont(popupFont);
+		replayBtn.relocate(530 - 120, 540 + 10);
+		root.getChildren().add(replayBtn);
+		
+		getBoard(board, root);
 
 		// creates pop up so user can choose player mode
 		Rectangle popup = new Rectangle((WIDTH / 2) - (300 / 2), (HEIGHT / 2) - (200 / 2), 300, 200);
@@ -100,6 +107,21 @@ public class GUIBoard extends Application {
 			root.getChildren().remove(TwoPlayerbtn);
 			root.getChildren().remove(SinglePlayerbtn);
 		});
+		
+		
+		replayBtn.setOnAction((event) -> {
+			board.reset();
+			getBoard(board, root);
+			
+			done = true;
+			singlePlayer = false;
+			turn = 0;
+			root.getChildren().add(popup);
+			root.getChildren().add(popupTitle);
+			root.getChildren().add(TwoPlayerbtn);
+			root.getChildren().add(SinglePlayerbtn);
+			
+		});
 
 		// Lets user place game pieces and checks for winner
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -112,25 +134,35 @@ public class GUIBoard extends Application {
 					if (singlePlayer == false) {
 						// checks whose turn it is
 						if (turn % 2 == 0) {
-							board.placePiece(column, CellState.P1);
-							msg = "It is player two's turn (yellow).";
+							if (column == 0) {
+								msg = "You cannot place a piece out of bounds.";
+							} else {
+								board.placePiece(column, CellState.P1);
+								msg = "It is player two's turn (yellow).";
+							}
 						} else {
-							board.placePiece(column, CellState.P2);
-							msg = "It is player one's turn (red).";
+							if (column == 0) {
+								msg = "You cannot place a piece out of bounds.";
+							} else {
+								board.placePiece(column, CellState.P2);
+								msg = "It is player one's turn (red).";
+							}
 						}
 					} else {
 						board.placePiece(column, CellState.P1);
-						
+
 						// check if any player has won
 						if (board.checkAcross() == 1 || board.checkVertical() == 1
-								|| board.checkDiagonalOne() == 1 || board.checkDiagonalTwo() == 1) {
+								|| board.checkDiagonalOne() == 1
+								|| board.checkDiagonalTwo() == 1) {
 							msg = "Player one won!";
 							done = true;
 						} else if (board.checkAcross() == 2 || board.checkVertical() == 2
-								|| board.checkDiagonalOne() == 2 || board.checkDiagonalTwo() == 2) {
+								|| board.checkDiagonalOne() == 2
+								|| board.checkDiagonalTwo() == 2) {
 							msg = "Player two won!";
 							done = true;
-						}else {
+						} else {
 							int genCol = (int) (Math.random() * (COLS - 1 + 1) + 1);
 							board.placePiece(genCol, CellState.P2);
 						}
@@ -149,12 +181,12 @@ public class GUIBoard extends Application {
 						msg = "Player two won!";
 						done = true;
 					}
-
 					turn = turn + 1;
 					result.setText(msg);
 				}
 			}
 		});
+		
 
 		// shows a message to the player
 		result.setFont(font);
@@ -171,6 +203,10 @@ public class GUIBoard extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public void test(Button replayBtn) {
+		
 	}
 
 	/**
