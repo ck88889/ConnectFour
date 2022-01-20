@@ -109,16 +109,18 @@ public class GUIBoard extends Application {
 		});
 
 		replayBtn.setOnAction((event) -> {
-			board.reset();
-			getBoard(board, root);
+			if(!root.getChildren().contains(popupTitle)) {
+				board.reset();
+				getBoard(board, root);
 
-			done = true;
-			singlePlayer = false;
-			turn = 0;
-			root.getChildren().add(popup);
-			root.getChildren().add(popupTitle);
-			root.getChildren().add(TwoPlayerbtn);
-			root.getChildren().add(SinglePlayerbtn);
+				done = true;
+				singlePlayer = false;
+				turn = 0;
+				root.getChildren().add(popup);
+				root.getChildren().add(popupTitle);
+				root.getChildren().add(TwoPlayerbtn);
+				root.getChildren().add(SinglePlayerbtn);
+			}
 
 		});
 
@@ -134,16 +136,18 @@ public class GUIBoard extends Application {
 						// checks whose turn it is
 						if (turn % 2 == 0) {
 							if (column == 0) {
-								msg = "Column is full.";
+								msg = "Invalid click";
 							} else {
 								board.placePiece(column, CellState.P1);
+								turn = turn + 1;
 								msg = "It is player two's turn (yellow).";
 							}
 						} else {
 							if (column == 0) {
-								msg = "You cannot place a piece out of bounds.";
+								msg = "Invalid click";
 							} else {
 								board.placePiece(column, CellState.P2);
+								turn = turn + 1;
 								msg = "It is player one's turn (red).";
 							}
 						}
@@ -178,7 +182,7 @@ public class GUIBoard extends Application {
 						msg = "Player two won!";
 						done = true;
 					}
-					turn = turn + 1;
+					
 					result.setText(msg);
 				}
 			}
@@ -216,8 +220,8 @@ public class GUIBoard extends Application {
 		int count = 1;
 
 		for (int i = 1; i < 8; i++) {
-			int x1 = 5 + ((i - 1) * 75);
-			int x2 = 75 + ((i - 1) * 75);
+			int x1 = 0 + ((i - 1) * 75);
+			int x2 = 80 + ((i - 1) * 75);
 			if (x1 < coorX && x2 > coorX) {
 				foundCol = i;
 			}
