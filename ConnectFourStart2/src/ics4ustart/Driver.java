@@ -88,7 +88,11 @@ public class Driver {
 		}
 		return column;
 	}
-
+	/**
+	 * checks 
+	 * @param turn number
+	 * @return player's turn 
+	 */
 	public static int checkTurn(int turn) {
 		if (turn % 2 == 0) {
 			return 2;
