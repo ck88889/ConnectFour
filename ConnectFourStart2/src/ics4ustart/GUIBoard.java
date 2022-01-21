@@ -135,16 +135,18 @@ public class GUIBoard extends Application {
 					if (singlePlayer == false) {
 						// checks whose turn it is
 						if (turn % 2 == 0) {
-							if (column == 0) {
+							if (column == 0 || checkFull(board)) {
 								msg = "Invalid click";
+								
 							} else {
 								board.placePiece(column, CellState.P1);
 								turn = turn + 1;
 								msg = "It is player two's turn (yellow).";
 							}
 						} else {
-							if (column == 0) {
+							if (column == 0 || checkFull(board)) {
 								msg = "Invalid click";
+								
 							} else {
 								board.placePiece(column, CellState.P2);
 								turn = turn + 1;
@@ -168,7 +170,7 @@ public class GUIBoard extends Application {
 							board.placePiece(genCol, CellState.P2);
 						}
 					}
-
+					
 					// generates game board
 					getBoard(board, root);
 
@@ -187,6 +189,12 @@ public class GUIBoard extends Application {
 				}
 			}
 		});
+		
+		//tell user the board is full
+		if(checkFull(board)) {
+			msg = "Board is full.";
+		}
+		
 
 		// shows a message to the player
 		result.setFont(font);
@@ -237,6 +245,24 @@ public class GUIBoard extends Application {
 			return 0;
 		} else {
 			return foundCol;
+		}
+	}
+	
+	public boolean checkFull(Board board) {
+		int count  = 1;
+		
+		for (int i = 0; i < 7; i++) {
+			for(int x = 0; x < 7; x++) {
+				if (board.getPiece(i, x).getState() == CellState.P1 || board.getPiece(i, x).getState() == CellState.P2) {
+					count = count + 1;
+				}
+			}
+		}
+		
+		if(count > 49) {
+			return true;
+		}else {
+			return false;
 		}
 	}
 

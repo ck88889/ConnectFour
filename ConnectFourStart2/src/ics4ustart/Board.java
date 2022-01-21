@@ -61,14 +61,13 @@ public class Board {
 	}
 
 	/**
-	 * Checks if four in a row has been reached horizontally @ return the number of
-	 * the player who won, 0 if no one won horizontally
+	 * Checks if four in a row has been reached horizontally
+	 * @ return the number of the player who won, 0 if no one won horizontally
 	 */
 	public int checkAcross() {
 		int countP1 = 0;
 		int countP2 = 0;
 
-		// Checks if four across has been reached for either player
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
 				if (board[r][c].getState() == CellState.P1) {
@@ -81,7 +80,6 @@ public class Board {
 				} else {
 					countP2 = 0;
 				}
-
 				if (countP1 == 4) {
 					return 1;
 				}
@@ -92,16 +90,14 @@ public class Board {
 		}
 		return 0;
 	}
-
 	/**
-	 * Checks if four in a row has been reached vertically @ return the number of
-	 * the player who won, 0 if no one won horizontally
+	 * Checks if four in a row has been reached vertically
+	 * @ return the number of the player who won, 0 if no one won horizontally
 	 */
 	public int checkVertical() {
 		int countP1 = 0;
 		int countP2 = 0;
 
-		// Checks if four down has been reached for either player
 		for (int c = 0; c < cols; c++) {
 			for (int r = 0; r < rows; r++) {
 				if (board[r][c].getState() == CellState.P1) {
@@ -124,56 +120,42 @@ public class Board {
 		}
 		return 0;
 	}
-
 	/**
-	 * Checks if four in a row has been reached diagonally from top left to bottom
-	 * right @ return the number of the player who won, 0 if no one won diagonally
+	 * Checks if four in a row has been reached diagonally from top left to bottom right
+	 * @ return the number of the player who won, 0 if no one won diagonally
 	 */
 	public int checkDiagonalOne() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
-
-		// checks for diagonals
 		for (int r = 0; r < rows - 3; r++) {
 			for (int c = 0; c < cols - 3; c++) {
-				// checks if player one has four diagonally from current row and column of the
-				// loop down to the right
 				if (board[r][c].getState() == player1 && board[r + 1][c + 1].getState() == player1
 						&& board[r + 2][c + 2].getState() == player1 && board[r + 3][c + 3].getState() == player1) {
 					return 1;
-					// checks if player two has four diagonally from current row and column of the
-					// loop down to the right
 				} else if (board[r][c].getState() == player2 && board[r + 1][c + 1].getState() == player2
-						&& board[r + 2][c + 2].getState() == player2 && board[r + 3][c + 3].getState() == player2) {
+						&& board[r + 2][c + 2].getState() == player2 && board[r + 3][c + 3].getState() == player2
+						) {
 					return 2;
 				}
 			}
 		}
 		return 0;
 	}
-
+	
 	/**
-	 * Checks if four in a row has been reached diagonally from top right to bottom
-	 * left @ return the number of the player who won, 0 if no one won diagonally
+	 * Checks if four in a row has been reached diagonally from top right to bottom left
+	 * @ return the number of the player who won, 0 if no one won diagonally
 	 *
 	 */
 	public int checkDiagonalTwo() {
 		CellState player1 = CellState.P1;
 		CellState player2 = CellState.P2;
-
-		// checks for diagonals
-		for (int r = 0; r < rows - 3; r++) {
-			for (int c = cols - 1; c >= 3; c--) {
-				// checks if player one has four diagonally from current row and column of the
-				// loop down to the left
-				if (board[r][c].getState() == player1 && board[r + 1][c - 1].getState() == player1
-						&& board[r + 2][c - 2].getState() == player1 && board[r + 3][c - 3].getState() == player1) {
+		for (int r = 0; r < rows-3; r++) {
+			for (int c = cols-1; c >= 3; c --) {
+				if (board[r][c].getState() == player1 && board[r + 1][c- 1].getState() == player1 && board[r+2][c-2].getState() == player1 && board[r+3][c-3].getState() == player1) {
 					return 1;
 				}
-				// checks if player two has four diagonally from current row and column of the
-				// loop down to the left
-				else if (board[r][c].getState() == player2 && board[r + 1][c - 1].getState() == player2
-						&& board[r + 2][c - 2].getState() == player2 && board[r + 3][c - 3].getState() == player2) {
+				else if(board[r][c].getState() == player2 && board[r + 1][c- 1].getState() == player2 && board[r+2][c-2].getState() == player2 && board[r+3][c-3].getState() == player2) {
 					return 2;
 				}
 			}
@@ -195,13 +177,12 @@ public class Board {
 
 		return false;
 	}
-
+	
 	/**
 	 * displays board in the console
 	 */
 	public void display() {
 		System.out.println("BOARD");
-		// displays the board
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				System.out.printf("%s ", board[i][j]);
@@ -211,11 +192,10 @@ public class Board {
 	}
 
 	/**
-	 * @param column - the column that the user inputted
+	 * @param column - the column that the user inputted 
 	 * @param player - player 1 or player 2
 	 */
 	public void placePiece(int column, CellState player) {
-		// places a piece according to the provided column number
 		for (int i = 6; i > -1; i--) {
 			if (isValid(i, column - 1)) {
 				board[i][column - 1].setState(player);
@@ -224,10 +204,7 @@ public class Board {
 		}
 
 	}
-
-	/**
-	 * resets board array to blank
-	 */
+	
 	public void reset() {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
